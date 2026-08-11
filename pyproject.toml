@@ -1,0 +1,13 @@
+[project]
+name = "agent-framework-durable-spike"
+version = "0.1.4"
+description = "Minimal Microsoft Agent Framework durable workflow restart and external-signal spike"
+requires-python = ">=3.10"
+dependencies = [
+  "agent-framework-durabletask==1.0.0b260709",
+  "azure-identity>=1.23.0,<2",
+]
+
+[tool.uv]
+prerelease = "allow"
+package = false

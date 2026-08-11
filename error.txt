@@ -1,0 +1,82 @@
+2026-08-10 23:38:06.590 durabletask-client INFO: Starting new 'dafx-durable_signal_spike' instance with ID = 'local-case-002'.
+Traceback (most recent call last):
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/spike.py", line 530, in <module>
+    main()
+    ~~~~^^
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/spike.py", line 514, in main
+    command_start(args)
+    ~~~~~~~~~~~~~^^^^^^
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/spike.py", line 267, in command_start
+    instance_id = workflow.start_workflow(
+        input={"business_key": args.business_key, "input_value": args.input_value},
+        instance_id=args.instance_id,
+    )
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/.venv/lib/python3.13/site-packages/agent_framework_durabletask/_workflows/client.py", line 122, in start_workflow
+    new_instance_id = self._client.schedule_new_orchestration(
+        orchestration_name,
+    ...<5 lines>...
+        instance_id=instance_id,
+    )
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/.venv/lib/python3.13/site-packages/durabletask/client.py", line 651, in schedule_new_orchestration
+    res: pb.CreateInstanceResponse = self._stub.StartInstance(req)
+                                     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/.venv/lib/python3.13/site-packages/grpc/_interceptor.py", line 276, in __call__
+    response, ignored_call = self._with_call(
+                             ~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<4 lines>...
+        compression=compression,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/.venv/lib/python3.13/site-packages/grpc/_interceptor.py", line 331, in _with_call
+    return call.result(), call
+           ~~~~~~~~~~~^^
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/.venv/lib/python3.13/site-packages/grpc/_channel.py", line 447, in result
+    raise self
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/.venv/lib/python3.13/site-packages/grpc/_interceptor.py", line 314, in continuation
+    response, call = self._thunk(new_method).with_call(
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<4 lines>...
+        compression=new_compression,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/.venv/lib/python3.13/site-packages/grpc/_interceptor.py", line 342, in with_call
+    return self._with_call(
+           ~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<4 lines>...
+        compression=compression,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/.venv/lib/python3.13/site-packages/grpc/_interceptor.py", line 331, in _with_call
+    return call.result(), call
+           ~~~~~~~~~~~^^
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/.venv/lib/python3.13/site-packages/grpc/_channel.py", line 447, in result
+    raise self
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/.venv/lib/python3.13/site-packages/grpc/_interceptor.py", line 314, in continuation
+    response, call = self._thunk(new_method).with_call(
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<4 lines>...
+        compression=new_compression,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/.venv/lib/python3.13/site-packages/grpc/_channel.py", line 1182, in with_call
+    return _end_unary_response_blocking(state, call, True, None)
+  File "/home/socasanta/dev/socasanta/agent-framework-durable-spike/.venv/lib/python3.13/site-packages/grpc/_channel.py", line 999, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.INVALID_ARGUMENT
+	details = "Version values must be in the form of 'Major[.Minor[.Patch]]' with integer values"
+	debug_error_string = "INVALID_ARGUMENT:Version values must be in the form of 'Major[.Minor[.Patch]]' with integer values"
+>
