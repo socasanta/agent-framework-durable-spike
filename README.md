@@ -77,6 +77,17 @@ No HTTP service is hidden in this sample. The operator CLI is a Durable Task cli
 - `azure/deploy.sh` — provisions and deploys the Azure spike from Bash.
 - `azure/cleanup.sh` — deletes only the explicitly named spike resource group.
 
+## Shell used by this project
+
+All command examples and automation scripts in this project use **Bash**.
+
+- On Linux or macOS, use a normal Bash terminal.
+- On Windows, use WSL or Git Bash.
+- Do not paste the commands into PowerShell: Bash line continuations (`\`),
+  `export`, `chmod`, and the `.sh` scripts are not PowerShell syntax.
+
+The project does not include or require PowerShell deployment scripts.
+
 ## Configuration
 
 | Variable | Local default | Azure value |
@@ -102,10 +113,12 @@ This proves worker-process restart durability against the emulator. It does not 
 
 ## Local setup
 
-Prerequisites: Python 3.10+, `uv`, Docker, and Bash.
+Prerequisites: Python 3.10+, `uv`, Docker, and Bash. Run these commands from
+the project root:
 
 ```bash
 uv sync --prerelease allow
+docker rm --force dts-emulator 2>/dev/null || true
 docker run --detach --name dts-emulator -p 8080:8080 -p 8082:8082 mcr.microsoft.com/dts/dts-emulator:latest
 ```
 
@@ -132,7 +145,11 @@ scheduler call.
 
 ### Local restart/resume and duplicate test
 
-Use four Bash terminals in the project directory.
+The emulator runs detached in Docker. After starting it, use two Bash terminals
+in the project directory:
+
+- terminal 1: the long-running Python worker;
+- terminal 2: the short-lived client commands.
 
 1. Start the worker in window 1:
 
@@ -262,16 +279,18 @@ Permissions required by the deploying operator include resource creation, role a
 
 ## Azure provisioning and deployment
 
-From Bash, authenticate and select the intended tenant/account first:
+From a Bash terminal, authenticate first. The deployment script selects the
+subscription supplied through `--subscription-id`:
 
 ```bash
 az login --tenant <TENANT_ID>
 az account show --output table
 ```
 
-Run from the project root. The name prefix must be globally unique enough for
-ACR, must start with a lowercase letter, and may contain only lowercase letters
-and digits. Make the scripts executable after extracting the ZIP:
+Run the script from the project root. The name prefix must be globally unique
+enough for ACR, must start with a lowercase letter, and may contain only
+lowercase letters and digits. Make both Bash scripts executable after extracting
+the ZIP:
 
 ```bash
 chmod +x azure/deploy.sh azure/cleanup.sh
